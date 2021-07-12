@@ -4,23 +4,39 @@ using UnityEngine;
 
 public class ButtonController : MonoBehaviour
 {
+    GameController gameController;
+
     public int buttonPressed = 0;
-    public int[] buttonValues = { 0, 0, 0, 0, 0 };
+    public int[] buttonValues;
 
-    private int[] testArray = { 1, 1, 1, 1, 1 };
-    private int[] resetArray = { 0, 0, 0, 0, 0 };
+    private int[] testArray;
+    private int[] resetArray;
 
-    public int numButtons = 5;
+    public int numButtons = 0;
     public GameObject[] buttonArray;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        numButtons = gameController.numButtons;
+
+        buttonValues = new int[numButtons];
+        testArray = new int[numButtons];
+        resetArray = new int[numButtons];
+
+        buttonValues[0] = 0;
+        testArray[0] = 1;
+        resetArray[0] = 0;
         gameObject.transform.GetChild(0).GetComponent<ButtonBehaviorSequential>().childNumber = 0;
 
         for (int i = 1; i < numButtons; i++)
         {
+            buttonValues[i] = 0;
+            testArray[i] = 1;
+            resetArray[i] = 0;
             gameObject.transform.GetChild(i).GetComponent<ButtonBehaviors>().childNumber = i;
+            Debug.Log(buttonValues[i]);
         }
     }
 

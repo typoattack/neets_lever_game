@@ -4,17 +4,24 @@ using UnityEngine;
 
 public class CubeController : MonoBehaviour
 {
+    GameController gameController;
     ButtonController buttons;
-    public int[] cubePositions = { 0, 0, 0, 0, 0 };
-    public int[] buttonValues = new int[5];
+    public int[] cubePositions;
+    public int[] buttonValues;
 
-    public int numCubes = 5;
+    public int numCubes = 0;
     public GameObject[] cubeArray;
     public GameObject cube;
 
     // Start is called before the first frame update
     void Start()
     {
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        numCubes = gameController.numButtons;
+
+        cubePositions = new int[numCubes];
+        buttonValues = new int[numCubes];
+
         buttons = GameObject.Find("ButtonHolder").GetComponent<ButtonController>();
         buttonValues = buttons.buttonValues;
         cubeArray = new GameObject[numCubes];
@@ -29,6 +36,7 @@ public class CubeController : MonoBehaviour
         for (int i = 0; i < numCubes; i++)
         {
             cubeArray[i] = gameObject.transform.GetChild(i).gameObject;
+            cubePositions[i] = buttonValues[i];
         }
     }
 
