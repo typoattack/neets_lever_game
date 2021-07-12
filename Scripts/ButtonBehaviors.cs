@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ButtonBehaviors : MonoBehaviour
 {
+    GameController gameController;
     ButtonController buttonController;
     
     public int childNumber = 0;
@@ -12,7 +13,7 @@ public class ButtonBehaviors : MonoBehaviour
     public int childBehind = 0;
     public int childTwoBehind = 0;
 
-    private int totalNumberOfChildren = 0;
+    public int totalNumberOfChildren = 0;
 
     public int behavior = 0;
     private int totalNumberOfBehaviors = 6;
@@ -20,15 +21,17 @@ public class ButtonBehaviors : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        gameController = GameObject.Find("GameController").GetComponent<GameController>();
+        totalNumberOfChildren = gameController.numButtons;
         buttonController = GameObject.Find("ButtonHolder").GetComponent<ButtonController>();
-        totalNumberOfChildren = buttonController.numButtons;
-        behavior = Random.Range(0, totalNumberOfBehaviors);
+        if (totalNumberOfChildren == 3) behavior = Random.Range(1, 3);
+        else behavior = Random.Range(1, totalNumberOfBehaviors);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (childNumber + 1 >= totalNumberOfChildren) childInFront = 0;
+        if (childNumber + 1 >= totalNumberOfChildren) childInFront = childNumber + 1 - totalNumberOfChildren;
         else childInFront = childNumber + 1;
 
         if (childNumber + 2 >= totalNumberOfChildren) childTwoInFront = childNumber + 2 - totalNumberOfChildren;
@@ -43,7 +46,8 @@ public class ButtonBehaviors : MonoBehaviour
 
     public void GetNewBehaviors()
     {
-        behavior = Random.Range(0, totalNumberOfBehaviors);
+        if (totalNumberOfChildren == 3) behavior = Random.Range(1, 3);
+        else behavior = Random.Range(1, totalNumberOfBehaviors);
     }
 
     public void onPush()
