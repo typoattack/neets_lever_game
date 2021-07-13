@@ -9,14 +9,13 @@ public class ButtonController : MonoBehaviour
     public int buttonPressed = 0;
     public int[] buttonValues;
 
-    private int[] testArray;
+    public int[] testArray;
     private int[] resetArray;
 
     public int numButtons = 0;
     public GameObject[] buttonArray;
 
-    // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         gameController = GameObject.Find("GameController").GetComponent<GameController>();
         numButtons = gameController.numButtons;
@@ -26,18 +25,23 @@ public class ButtonController : MonoBehaviour
         resetArray = new int[numButtons];
 
         buttonValues[0] = 0;
-        testArray[0] = 1;
+        testArray[0] = Random.Range(0, 2);
         resetArray[0] = 0;
         gameObject.transform.GetChild(0).GetComponent<ButtonBehaviorSequential>().childNumber = 0;
 
         for (int i = 1; i < numButtons; i++)
         {
             buttonValues[i] = 0;
-            testArray[i] = 1;
+            testArray[i] = Random.Range(0, 2);
             resetArray[i] = 0;
             gameObject.transform.GetChild(i).GetComponent<ButtonBehaviors>().childNumber = i;
-            Debug.Log(buttonValues[i]);
         }
+    }
+
+    // Start is called before the first frame update
+    void Start()
+    {
+        
     }
 
     // Update is called once per frame
@@ -67,7 +71,7 @@ public class ButtonController : MonoBehaviour
     IEnumerator ResetButtons()
     {
         yield return new WaitForSeconds(1);
-        Reset();
+        NewGame();
     }
 
     public void Reset()
@@ -89,6 +93,10 @@ public class ButtonController : MonoBehaviour
     public void NewGame()
     {
         Reset();
+        for (int i = 0; i < numButtons; i++)
+        {
+            testArray[i] = Random.Range(0, 2);
+        }
         BroadcastMessage("GetNewBehaviors");
     }
 }

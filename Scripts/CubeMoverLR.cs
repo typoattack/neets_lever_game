@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeMover : MonoBehaviour
+public class CubeMoverLR : MonoBehaviour
 {
     private float speed;
     private Vector2 destination;
@@ -18,7 +18,7 @@ public class CubeMover : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        destination = new Vector2(transform.position.x, target);
+        destination = new Vector2(target, transform.position.y);
         float step = speed * Time.deltaTime;
         transform.position = Vector2.MoveTowards(transform.position, destination, step);
     }

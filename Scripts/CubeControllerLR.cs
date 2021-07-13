@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CubeController : MonoBehaviour
+public class CubeControllerLR : MonoBehaviour
 {
     GameController gameController;
     ButtonController buttonController;
@@ -39,7 +39,6 @@ public class CubeController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
         for (int i = 0; i < numCubes; i++)
         {
             buttonValues[i] = buttonController.buttonValues[i];
@@ -52,21 +51,28 @@ public class CubeController : MonoBehaviour
 
             if (cubePositions[i] == testArray[i])
             {
-                cubeArray[i].GetComponent<Renderer>().material.SetColor("_Color", Color.green);
+                cubeArray[i].gameObject.GetComponent<Renderer>().material.SetColor("_Color", Color.green);
             }
             else
             {
-                cubeArray[i].GetComponent<Renderer>().material.SetColor("_Color", Color.red);
+                cubeArray[i].gameObject.GetComponent<Renderer>().material.SetColor("_Color", Color.red);
             }
         }
-        
-        
+
+
     }
-    
+
     void moveCube(int button, int newPosition)
     {
         cubePositions[button] = newPosition;
-        cubeArray[button].GetComponent<CubeMover>().target = cubePositions[button];
+        if (button < numCubes / 2)
+        {
+            cubeArray[button].gameObject.GetComponent<CubeMoverLR>().target = -(cubePositions[button] + 1);
+        }
+        else
+        {
+            cubeArray[button].gameObject.GetComponent<CubeMoverLR>().target = (cubePositions[button] + 1);
+        }
     }
-    
+
 }
