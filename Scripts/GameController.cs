@@ -28,8 +28,18 @@ public class GameController : MonoBehaviour
         numButtons = 5;
     }
 
+    public void game6()
+    {
+        numButtons = 6;
+    }
+
     public void game7()
     {
         numButtons = 7;
+    }
+
+    public void game8()
+    {
+        numButtons = 8;
     }
 }
